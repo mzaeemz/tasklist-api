@@ -1,0 +1,13 @@
+version: '3'
+services:
+    db:
+        container_name: tasklist_db_container
+        restart: always
+        image: mysql:5.7
+        environment:
+            - MYSQL_DATABASE=tasklist_db
+            - MYSQL_USER=tasklist_user
+            - MYSQL_PASSWORD=ThisIsPasswordForTaskList
+            - MYSQL_ROOT_PASSWORD=ThisIsRootPasswordForTaskList
+        ports:
+            - "7852:5432"
