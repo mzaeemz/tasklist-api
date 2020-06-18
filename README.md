@@ -1,17 +1,29 @@
-# Play REST API
+# Task List API
 
-This is the play slick tasklist-api task
+*API for making a task list.*
 
-## Appendix
-
-### Running
-
-You need to download and install sbt for this application to run.
-
-Once you have sbt installed, the following at the command prompt will start up Play in development mode:
-
+## Database Setup
 ```bash
-sbt run
+docker-compose up -d
+```
+You can connect to database through credentials being used in `./docker-compose.yml`
+
+## Project Setup
+```
+Usage: ./scripts/run.sh [-c] [ -p PORT ]  
+    -c to the project
+    -p PORT to specify port (defaulted to 7850)
+
+Example:
+    ./scripts/run.sh -c -p 3456
+```
+You can also check by specifying -h flag
+```
+./scripts/run.sh -h
 ```
 
-Play will start up on the HTTP port at <http://localhost:9000/>.   You don't need to deploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request.
+## Running Project
+You can run project using:
+```bash
+sbt -Dhttp=7850 run
+```
