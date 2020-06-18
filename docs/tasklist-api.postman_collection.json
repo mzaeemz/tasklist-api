@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "7df8a634-7043-40d6-b9cb-c4955fc51a32",
+		"name": "tasklist-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Get all tasks from db"
+			},
+			"response": []
+		},
+		{
+			"name": "insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Postman Task\"\n    \"description\" : \"Posting this through Postman\"\n}"
+				},
+				"url": {
+					"raw": "/tasks",
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "PostmanTask",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "Posting this from postman",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "new name postman",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "new description postman",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:7850/tasks/:id/update",
+					"host": [
+						"localhost"
+					],
+					"port": "7850",
+					"path": [
+						"tasks",
+						":id",
+						"update"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "New name postman",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "New Description postman",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7850/tasks/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "7850",
+					"path": [
+						"tasks",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:7850/tasks/:id/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "7850",
+					"path": [
+						"tasks",
+						":id",
+						"delete"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

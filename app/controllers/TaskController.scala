@@ -25,9 +25,6 @@ class TaskController @Inject()(@NamedDatabase("default") protected val dbConfigP
     )
   }
 
-  def hello(name: String): Action[AnyContent] = Action {
-    Ok("Hello " + name + "!")
-  }
   def getAll: Action[AnyContent] = Action.async {
     taskRepository.getAll.map{
       posts => Ok(Json.toJson(posts))
@@ -52,7 +49,7 @@ class TaskController @Inject()(@NamedDatabase("default") protected val dbConfigP
   private def insertJsonPost[A]()(
     implicit request: Request[A]): Future[Result] = {
     def failure(badForm: Form[TaskFormInput]): Future[Result] = {
-      Future.successful(Redirect(routes.TaskController.hello("input")).flashing("failure" -> s"BadForm!"))
+      Future.successful(BadRequest)
     }
     def success(input: TaskFormInput): Future[Result] = {
         val taskRow = TaskRow(0L,input.name,input.description)
@@ -64,7 +61,7 @@ class TaskController @Inject()(@NamedDatabase("default") protected val dbConfigP
   private def updateJsonPost[A](id: Long)(
     implicit request: Request[A]): Future[Result] = {
     def failure(badForm: Form[TaskFormInput]): Future[Result] = {
-      Future.successful(Redirect(routes.TaskController.hello("input")).flashing("failure" -> s"BadForm!"))
+      Future.successful(BadRequest)
     }
 
     def success(input: TaskFormInput): Future[Result] = {

@@ -1,13 +1,9 @@
 +anyhost
-GET /hello/:name                controllers.TaskController.hello(name)
-+anyhost
 GET /tasks                      controllers.TaskController.getAll()
 +anyhost
 POST /tasks                     controllers.TaskController.insert()
 +anyhost
 GET /tasks/:id                  controllers.TaskController.get(id)
-+anyhost
-PUT /tasks/:id/update           controllers.TaskController.update(id)
 +anyhost
 DELETE /tasks/:id/delete        controllers.TaskController.delete(id)
 +anyhost
