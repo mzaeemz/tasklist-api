@@ -1,10 +1,5 @@
-+anyhost
 GET /tasks                      controllers.TaskController.getAll()
-+anyhost
 POST /tasks                     controllers.TaskController.insert()
-+anyhost
 GET /tasks/:id                  controllers.TaskController.get(id)
-+anyhost
 DELETE /tasks/:id/delete        controllers.TaskController.delete(id)
-+anyhost
-PATCH /tasks/:id/update           controllers.TaskController.update(id)
+PATCH /tasks/:id/update         controllers.TaskController.update(id)
