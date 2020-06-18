@@ -25,23 +25,35 @@ class TaskController @Inject()(@NamedDatabase("default") protected val dbConfigP
     )
   }
 
-  def hello(name: String) = Action {
+  def hello(name: String): Action[AnyContent] = Action {
     Ok("Hello " + name + "!")
   }
-  def getAll() = Action.async {
+  def getAll: Action[AnyContent] = Action.async {
     taskRepository.getAll.map{
       posts => Ok(Json.toJson(posts))
     }(this.defaultExecutionContext)
   }
-  def process: Action[AnyContent] = Action.async { implicit request =>
-    processJsonPost()
+  def get(id: String): Action[AnyContent] = Action.async {
+    taskRepository.get(id.toLong).map{
+      post => Ok(Json.toJson(post))
+    }(this.defaultExecutionContext)
   }
-  private def processJsonPost[A]()(
+  def insert: Action[AnyContent] = Action.async { implicit request =>
+    insertJsonPost()
+  }
+  def update(id: String): Action[AnyContent] = Action.async { implicit request =>
+    updateJsonPost(id.toLong)
+  }
+  def delete(id: String): Action[AnyContent] = Action.async { implicit request =>
+    taskRepository.delete(id.toLong).map{
+      post => Ok(Json.toJson(post))
+    }(this.defaultExecutionContext)
+  }
+  private def insertJsonPost[A]()(
     implicit request: Request[A]): Future[Result] = {
     def failure(badForm: Form[TaskFormInput]): Future[Result] = {
       Future.successful(Redirect(routes.TaskController.hello("input")).flashing("failure" -> s"BadForm!"))
     }
-
     def success(input: TaskFormInput): Future[Result] = {
         val taskRow = TaskRow(0L,input.name,input.description)
         taskRepository.add(taskRow)
@@ -49,5 +61,17 @@ class TaskController @Inject()(@NamedDatabase("default") protected val dbConfigP
     }
     form.bindFromRequest().fold(failure,success)
   }
+  private def updateJsonPost[A](id: Long)(
+    implicit request: Request[A]): Future[Result] = {
+    def failure(badForm: Form[TaskFormInput]): Future[Result] = {
+      Future.successful(Redirect(routes.TaskController.hello("input")).flashing("failure" -> s"BadForm!"))
+    }
 
+    def success(input: TaskFormInput): Future[Result] = {
+      val taskRow = TaskRow(id,input.name,input.description)
+      taskRepository.update(taskRow)
+      Future.successful(Created(Json.toJson(taskRow)))
+    }
+    form.bindFromRequest().fold(failure,success)
+  }
 }
